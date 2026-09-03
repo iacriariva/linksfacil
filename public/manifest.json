@@ -1,50 +1,67 @@
 {
   "$schema": "https://json.schemastore.org/web-manifest-combined.json",
-  "name": "LinksFácil",
+  "name": "LinksFácil - Gerenciador de Links",
   "short_name": "LinksFácil",
-  "description": "Gerenciador de links rápido e fácil com favicons",
+  "description": "Gerenciador de links rápido e fácil com favicons e suporte PWA",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#3B82F6",
   "orientation": "portrait-primary",
+  "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "/icon-192.svg",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/icon-512.svg",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/icon-192-maskable.png",
+      "src": "/icon-192-maskable.svg",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "maskable"
     },
     {
-      "src": "/icon-512-maskable.png",
+      "src": "/icon-512-maskable.svg",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "maskable"
     }
   ],
-  "categories": ["productivity"],
+  "categories": ["productivity", "utilities"],
   "screenshots": [
     {
-      "src": "/screenshot-1.png",
+      "src": "/screenshot-1.svg",
       "sizes": "540x720",
-      "type": "image/png"
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
     },
     {
-      "src": "/screenshot-2.png",
+      "src": "/screenshot-2.svg",
       "sizes": "540x720",
-      "type": "image/png"
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Adicionar Link",
+      "short_name": "Adicionar",
+      "description": "Adicione um novo link rapidamente",
+      "url": "/?action=add",
+      "icons": [{
+        "src": "/icon-192.svg",
+        "sizes": "192x192",
+        "type": "image/svg+xml"
+      }]
     }
   ]
 }
