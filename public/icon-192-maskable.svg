@@ -1,10 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
   <defs>
-    <style>
-      .icon { font-size: 120px; font-family: Arial, sans-serif; }
-    </style>
+    <linearGradient id="g" x1="12" y1="8" x2="180" y2="184" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A52DE6"/>
+      <stop offset="1" stop-color="#4C0677"/>
+    </linearGradient>
   </defs>
-  <circle cx="96" cy="96" r="96" fill="#3B82F6"/>
-  <text class="icon" x="96" y="130" text-anchor="middle" fill="white">🔗</text>
+  <rect width="192" height="192" fill="url(#g)"/>
+  <circle cx="96" cy="96" r="49" fill="white" fill-opacity=".12"/>
+  <g transform="translate(42 42) scale(4.5)" fill="none" stroke="white" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+  </g>
 </svg>

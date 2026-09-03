@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { LinkData } from '@/types';
 import { useLinksStore } from '@/store/linksStore';
-import { Edit2, Trash2, ExternalLink } from 'lucide-react';
+import { Edit3, Trash2, ArrowUpRight } from 'lucide-react';
+import { extractDomain } from '@/lib/urlUtils';
 
 interface LinkCardProps {
   link: LinkData;
@@ -24,56 +25,72 @@ export function LinkCard({ link, onEdit }: LinkCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow hover:shadow-lg transition p-4 flex items-center gap-4 group">
+    <article className="group relative flex min-h-[168px] flex-col rounded-[28px] border border-black/[0.04] bg-white p-5 shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-card-hover sm:p-6">
+      <div className="mb-7 flex items-start justify-between gap-4">
       {/* Favicon */}
-      <div className="flex-shrink-0">
+        <div className="grid h-14 w-14 flex-shrink-0 place-items-center rounded-2xl bg-primary-light ring-1 ring-primary/10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={link.favicon}
           alt={link.name}
           width={48}
           height={48}
-          className="w-12 h-12 rounded-md object-cover bg-gray-100"
+            className="h-8 w-8 rounded-lg object-cover"
           onError={(e) => {
             (e.target as HTMLImageElement).src =
-              'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="48" height="48"%3E%3Crect fill="%23e5e7eb" width="48" height="48"/%3E%3Ctext x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="24" fill="%239ca3af" font-family="system-ui"%3E?%3C/text%3E%3C/svg%3E';
+                'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="48" height="48"%3E%3Crect rx="12" fill="%23F3E7FA" width="48" height="48"/%3E%3Ctext x="50%25" y="54%25" dominant-baseline="middle" text-anchor="middle" font-size="23" font-weight="700" fill="%23820AD1" font-family="system-ui"%3E?%3C/text%3E%3C/svg%3E';
           }}
         />
       </div>
 
-      {/* Info */}
-      <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-gray-900 truncate">{link.name}</h3>
-        <p className="text-sm text-gray-500 truncate">{link.url}</p>
+      {/* Actions */}
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={() => onEdit(link)}
+            className="grid h-10 w-10 place-items-center rounded-full text-gray-500 transition hover:bg-primary-light hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+            title="Editar link"
+            aria-label={`Editar ${link.name}`}
+          >
+            <Edit3 size={18} />
+          </button>
+          <button
+            type="button"
+            onClick={handleDelete}
+            disabled={deleting}
+            className="grid h-10 w-10 place-items-center rounded-full text-gray-500 transition hover:bg-red-50 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-200 disabled:cursor-not-allowed disabled:opacity-50"
+            title="Excluir link"
+            aria-label={`Excluir ${link.name}`}
+          >
+            <Trash2 size={18} />
+          </button>
+        </div>
       </div>
 
-      {/* Actions */}
-      <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition">
+      {/* Info */}
+      <div className="mt-auto min-w-0">
+        <h3 className="truncate text-lg font-bold tracking-[-0.02em] text-ink">
+          {link.name}
+        </h3>
+        <p className="mt-1 truncate text-sm text-gray-500">
+          {extractDomain(link.url)}
+        </p>
+      </div>
+
+      <div className="mt-5 border-t border-gray-100 pt-4">
         <a
           href={link.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition"
-          title="Acessar"
+          className="flex items-center justify-between rounded-xl text-sm font-bold text-primary outline-none transition hover:text-primary-dark focus:ring-2 focus:ring-primary/30"
+          title="Abrir link"
         >
-          <ExternalLink size={18} />
+          Acessar site
+          <span className="grid h-8 w-8 place-items-center rounded-full bg-primary-light transition group-hover:bg-primary group-hover:text-white">
+            <ArrowUpRight size={17} />
+          </span>
         </a>
-        <button
-          onClick={() => onEdit(link)}
-          className="p-2 text-amber-500 hover:bg-amber-50 rounded-lg transition"
-          title="Editar"
-        >
-          <Edit2 size={18} />
-        </button>
-        <button
-          onClick={handleDelete}
-          disabled={deleting}
-          className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
-          title="Deletar"
-        >
-          <Trash2 size={18} />
-        </button>
       </div>
-    </div>
+    </article>
   );
 }

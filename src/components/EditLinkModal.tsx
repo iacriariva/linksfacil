@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { LinkData } from '@/types';
 import { useLinksStore } from '@/store/linksStore';
 import { getFavicon, validateUrl, normalizeUrl } from '@/lib/urlUtils';
-import { X } from 'lucide-react';
+import { AlertCircle, Edit3, Globe2, Loader2, Type, X } from 'lucide-react';
 
 interface EditLinkModalProps {
   isOpen: boolean;
@@ -72,26 +72,40 @@ export function EditLinkModal({
   if (!isOpen || !link) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
-        <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-xl font-bold text-gray-900">
-            Editar Link
-          </h2>
+    <div
+      className="fixed inset-0 z-50 flex items-end justify-center bg-[#190523]/60 p-0 backdrop-blur-sm sm:items-center sm:p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="edit-link-title"
+    >
+      <div className="modal-enter w-full max-w-lg rounded-t-[32px] bg-white shadow-2xl sm:rounded-[32px]">
+        <div className="flex items-start justify-between px-6 pb-5 pt-7 sm:px-8 sm:pt-8">
+          <div className="flex items-center gap-4">
+            <div className="grid h-12 w-12 place-items-center rounded-2xl bg-primary-light text-primary">
+              <Edit3 size={22} />
+            </div>
+            <div>
+              <h2 id="edit-link-title" className="text-xl font-extrabold tracking-tight text-ink sm:text-2xl">
+                Editar link
+              </h2>
+              <p className="mt-0.5 text-sm text-gray-500">Atualize os dados do favorito.</p>
+            </div>
+          </div>
 
           <button
             type="button"
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 transition"
+            className="grid h-10 w-10 place-items-center rounded-full bg-gray-100 text-gray-500 transition hover:bg-primary-light hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
             aria-label="Fechar"
           >
-            <X size={24} />
+            <X size={20} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5 px-6 pb-7 sm:px-8 sm:pb-8">
           {error && (
-            <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+            <div className="flex items-center gap-2 rounded-2xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700" role="alert">
+              <AlertCircle size={18} />
               {error}
             </div>
           )}
@@ -99,45 +113,51 @@ export function EditLinkModal({
           <div>
             <label
               htmlFor="edit-link-name"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="mb-2 block text-sm font-bold text-gray-700"
             >
               Nome
             </label>
-
-            <input
-              id="edit-link-name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              disabled={loading}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none disabled:opacity-50"
-            />
+            <div className="relative">
+              <Type className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={19} />
+              <input
+                id="edit-link-name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                disabled={loading}
+                autoFocus
+                className="w-full rounded-2xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-4 text-ink outline-none transition focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10 disabled:opacity-50"
+              />
+            </div>
           </div>
 
           <div>
             <label
               htmlFor="edit-link-url"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="mb-2 block text-sm font-bold text-gray-700"
             >
-              URL
+              Endereço do site
             </label>
-
-            <input
-              id="edit-link-url"
-              type="text"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              disabled={loading}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none disabled:opacity-50"
-            />
+            <div className="relative">
+              <Globe2 className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={19} />
+              <input
+                id="edit-link-url"
+                type="text"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                disabled={loading}
+                inputMode="url"
+                className="w-full rounded-2xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-4 text-ink outline-none transition focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10 disabled:opacity-50"
+              />
+            </div>
           </div>
 
-          <div className="flex gap-3 pt-4">
+          <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row">
             <button
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 rounded-full border border-gray-200 px-5 py-3.5 font-bold text-gray-700 transition hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Cancelar
             </button>
@@ -145,8 +165,9 @@ export function EditLinkModal({
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex flex-1 items-center justify-center gap-2 rounded-full bg-primary px-5 py-3.5 font-bold text-white shadow-lg shadow-primary/20 transition hover:bg-primary-dark focus:outline-none focus:ring-4 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-60"
             >
+              {loading && <Loader2 className="animate-spin" size={18} />}
               {loading ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
