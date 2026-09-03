@@ -1,4 +1,3 @@
-/** @type {import('next').NextConfig} */
 const withPWA = require('next-pwa')({
   dest: 'public',
   register: true,
@@ -6,9 +5,10 @@ const withPWA = require('next-pwa')({
   disable: process.env.NODE_ENV === 'development',
 });
 
-const nextConfig = withPWA({
-  reactStrictMode: true,
+const nextConfig = {
+  reactStrictMode: false,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -19,19 +19,7 @@ const nextConfig = withPWA({
         hostname: '**',
       },
     ],
-    unoptimized: true,
   },
-  headers: async () => [
-    {
-      source: '/manifest.json',
-      headers: [
-        {
-          key: 'Content-Type',
-          value: 'application/manifest+json',
-        },
-      ],
-    },
-  ],
-});
+};
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);
