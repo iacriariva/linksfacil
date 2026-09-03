@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 720">
+  <defs>
+    <style>
+      .bg { fill: #f3f4f6; }
+      .header { fill: #3B82F6; }
+      .card { fill: white; stroke: #e5e7eb; stroke-width: 2; }
+      .text { font-family: Arial, sans-serif; fill: #1f2937; }
+      .subtext { font-family: Arial, sans-serif; fill: #6b7280; }
+    </style>
+  </defs>
+  <rect class="bg" width="540" height="720"/>
+  <rect class="header" width="540" height="100"/>
+  <text class="text" x="30" y="60" font-size="32" font-weight="bold" fill="white">LinksFácil</text>
+  
+  <!-- Cards -->
+  <rect class="card" x="20" y="130" width="500" height="80" rx="10"/>
+  <circle cx="50" cy="170" r="25" fill="#e5e7eb"/>
+  <text class="text" x="90" y="160" font-size="16" font-weight="bold">YouTube</text>
+  <text class="subtext" x="90" y="180" font-size="14">youtube.com</text>
+  
+  <rect class="card" x="20" y="230" width="500" height="80" rx="10"/>
+  <circle cx="50" cy="270" r="25" fill="#e5e7eb"/>
+  <text class="text" x="90" y="260" font-size="16" font-weight="bold">GitHub</text>
+  <text class="subtext" x="90" y="280" font-size="14">github.com</text>
+  
+  <rect class="card" x="20" y="330" width="500" height="80" rx="10"/>
+  <circle cx="50" cy="370" r="25" fill="#e5e7eb"/>
+  <text class="text" x="90" y="360" font-size="16" font-weight="bold">LinkedIn</text>
+  <text class="subtext" x="90" y="380" font-size="14">linkedin.com</text>
+</svg>

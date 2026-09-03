@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <defs>
+    <style>
+      .bg { fill: #3B82F6; }
+      .icon { font-size: 120px; font-family: Arial, sans-serif; }
+    </style>
+  </defs>
+  <rect class="bg" width="192" height="192" rx="40"/>
+  <text class="icon" x="96" y="130" text-anchor="middle" fill="white">🔗</text>
+</svg>

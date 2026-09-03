@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 720">
+  <defs>
+    <style>
+      .bg { fill: #3B82F6; }
+      .text { fill: white; font-family: Arial, sans-serif; font-weight: bold; }
+    </style>
+  </defs>
+  <rect class="bg" width="540" height="720"/>
+  <text class="text" x="270" y="360" font-size="200" text-anchor="middle" dominant-baseline="middle">🔗</text>
+  <text class="text" x="270" y="480" font-size="48" text-anchor="middle" dominant-baseline="middle">LinksFácil</text>
+</svg>
