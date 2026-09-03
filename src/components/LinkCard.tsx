@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { LinkData } from '@/types';
 import { useLinksStore } from '@/store/linksStore';
 import { Edit2, Trash2, ExternalLink } from 'lucide-react';
@@ -28,6 +27,7 @@ export function LinkCard({ link, onEdit }: LinkCardProps) {
     <div className="bg-white rounded-lg shadow hover:shadow-lg transition p-4 flex items-center gap-4 group">
       {/* Favicon */}
       <div className="flex-shrink-0">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={link.favicon}
           alt={link.name}
