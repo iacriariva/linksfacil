@@ -1,6 +1,11 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 
-export default class MyDocument extends Document {
+class MyDocument extends Document {
+  static async getInitialProps(ctx: DocumentContext) {
+    const initialProps = await Document.getInitialProps(ctx);
+    return initialProps;
+  }
+
   render() {
     return (
       <Html lang="pt-BR">
@@ -11,8 +16,11 @@ export default class MyDocument extends Document {
           <link rel="manifest" href="/manifest.json" />
           <link rel="icon" href="/favicon.ico" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+          <meta name="apple-mobile-web-app-title" content="LinksFácil" />
         </Head>
-        <body>
+        <body className="bg-gray-50">
           <Main />
           <NextScript />
         </body>
@@ -20,3 +28,5 @@ export default class MyDocument extends Document {
     );
   }
 }
+
+export default MyDocument;

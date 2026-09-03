@@ -1,12 +1,24 @@
+import type { NextConfig } from 'next';
 const withPWA = require('next-pwa')({
   dest: 'public',
   register: true,
   skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development'
+  runtimeCaching: [
+    {
+      urlPattern: /^https:\/\/www\.google\.com\/s2\/favicons/,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'favicons',
+        expiration: {
+          maxEntries: 100,
+          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 dias
+        },
+      },
+    },
+  ],
 });
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [
@@ -16,6 +28,10 @@ const nextConfig = {
       },
       {
         protocol: 'http',
+        hostname: '**',
+      },
+      {
+        protocol: 'data',
         hostname: '**',
       },
     ],
