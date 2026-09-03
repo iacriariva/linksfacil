@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import Head from 'next/head';
 
 export default function Custom500() {
@@ -11,12 +12,12 @@ export default function Custom500() {
         <div className="text-center">
           <h1 className="text-6xl font-bold text-gray-900 mb-4">500</h1>
           <p className="text-2xl text-gray-600 mb-8">Erro interno do servidor</p>
-          <a
+          <Link
             href="/"
             className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-medium inline-block"
           >
             Voltar para Início
-          </a>
+          </Link>
         </div>
       </div>
     </>

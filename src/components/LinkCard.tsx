@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { LinkData } from '@/types';
 import { useLinksStore } from '@/store/linksStore';
 import { Edit2, Trash2, ExternalLink } from 'lucide-react';
