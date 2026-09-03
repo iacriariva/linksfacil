@@ -1,4 +1,6 @@
 .vercelignore
+.eslintrc.json
 node_modules
 .git
 .next
+src/pages/api
