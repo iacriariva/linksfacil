@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { LinkData } from '@/types';
 import { useLinksStore } from '@/store/linksStore';
-import { getFavicon, validateUrl, normalizeUrl, extractDomain } from '@/lib/urlUtils';
-import { Plus, X } from 'lucide-react';
+import { getFavicon, validateUrl, normalizeUrl } from '@/lib/urlUtils';
+import { X } from 'lucide-react';
 
 export function AddLinkModal({
   isOpen,
@@ -26,23 +26,26 @@ export function AddLinkModal({
       return;
     }
 
-    if (!validateUrl(url)) {
+    const normalizedUrl = normalizeUrl(url.trim());
+
+    if (!validateUrl(normalizedUrl)) {
       setError('URL inválida');
       return;
     }
 
     setLoading(true);
+
     try {
-      const normalizedUrl = normalizeUrl(url);
-      const favicon = getFavicon(normalizedUrl);
+      const favicon = await getFavicon(normalizedUrl);
+      const now = new Date().toISOString();
 
       const newLink: LinkData = {
         id: Date.now().toString(),
         url: normalizedUrl,
         name: name.trim(),
         favicon,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        createdAt: now,
+        updatedAt: now,
       };
 
       addLink(newLink);
@@ -63,10 +66,15 @@ export function AddLinkModal({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
         <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-xl font-bold text-gray-900">Adicionar Link</h2>
+          <h2 className="text-xl font-bold text-gray-900">
+            Adicionar Link
+          </h2>
+
           <button
+            type="button"
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 transition"
+            aria-label="Fechar"
           >
             <X size={24} />
           </button>
@@ -80,28 +88,40 @@ export function AddLinkModal({
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="link-name"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Nome
             </label>
+
             <input
+              id="link-name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="ex: YouTube"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              placeholder="Ex.: YouTube"
+              disabled={loading}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none disabled:opacity-50"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="link-url"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               URL
             </label>
+
             <input
+              id="link-url"
               type="text"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
-              placeholder="ex: youtube.com ou https://youtube.com"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              placeholder="Ex.: youtube.com ou https://youtube.com"
+              disabled={loading}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none disabled:opacity-50"
             />
           </div>
 
@@ -109,10 +129,12 @@ export function AddLinkModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition font-medium"
+              disabled={loading}
+              className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Cancelar
             </button>
+
             <button
               type="submit"
               disabled={loading}
